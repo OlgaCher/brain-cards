@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<header th:fragment="header">
+    <nav>
+        <span th:text="#{app.name}">BrainCards</span>
+        <span>
+            <a href="?lang=uk" th:text="#{nav.language.uk}">UK</a> |
+            <a href="?lang=en" th:text="#{nav.language.en}">EN</a>
+        </span>
+        <span sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post" style="display:inline">
+                <button type="submit" th:text="#{nav.logout}">Logout</button>
+            </form>
+        </span>
+    </nav>
+</header>
+</body>
+</html>

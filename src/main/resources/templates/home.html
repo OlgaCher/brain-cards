@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="#{home.title}">Home</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<main>
+    <h1 th:text="#{home.greeting(${parent.displayName != null and !parent.displayName.isEmpty() ? parent.displayName : parent.email})}">Welcome</h1>
+
+    <section th:if="${child != null}">
+        <h2 th:text="#{home.child.section}">Your child</h2>
+        <p>
+            <strong th:text="#{home.child.name}">Name</strong>:
+            <span th:text="${child.name}">Name</span>
+        </p>
+        <p th:if="${child.birthDate != null}">
+            <strong th:text="#{home.child.birthDate}">Birth date</strong>:
+            <span th:text="${child.birthDate}">Birth date</span>
+        </p>
+    </section>
+
+    <section>
+        <h2 th:text="#{home.suggestions.title}">Today's suggested games</h2>
+        <p th:text="#{home.suggestions.placeholder}">Coming soon</p>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="#{register.title}">Register</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<main>
+    <h1 th:text="#{register.title}">Create your account</h1>
+
+    <form th:action="@{/register}" th:object="${registrationForm}" method="post">
+        <fieldset>
+            <legend th:text="#{register.parent.section}">Parent details</legend>
+            <div class="field">
+                <label for="email" th:text="#{register.email}">Email</label>
+                <input type="email" id="email" th:field="*{email}"/>
+                <span class="notice error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</span>
+            </div>
+            <div class="field">
+                <label for="password" th:text="#{register.password}">Password</label>
+                <input type="password" id="password" th:field="*{password}"/>
+                <span class="notice error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</span>
+            </div>
+            <div class="field">
+                <label for="displayName" th:text="#{register.displayName}">Display name</label>
+                <input type="text" id="displayName" th:field="*{displayName}"/>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend th:text="#{register.child.section}">Child details</legend>
+            <div class="field">
+                <label for="childName" th:text="#{register.child.name}">Child's name</label>
+                <input type="text" id="childName" th:field="*{childName}"/>
+                <span class="notice error" th:if="${#fields.hasErrors('childName')}" th:errors="*{childName}">Child name error</span>
+            </div>
+            <div class="field">
+                <label for="childBirthDate" th:text="#{register.child.birthDate}">Birth date</label>
+                <input type="date" id="childBirthDate" th:field="*{childBirthDate}"/>
+            </div>
+        </fieldset>
+
+        <button type="submit" th:text="#{register.submit}">Create account</button>
+    </form>
+
+    <p>
+        <span th:text="#{register.login.prompt}">Already registered?</span>
+        <a th:href="@{/login}" th:text="#{register.login.link}">Log in</a>
+    </p>
+</main>
+</body>
+</html>
