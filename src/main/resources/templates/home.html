@@ -11,7 +11,7 @@
 <main>
     <h1 th:text="#{home.greeting(${parent.displayName != null and !parent.displayName.isEmpty() ? parent.displayName : parent.email})}">Welcome</h1>
 
-    <section th:if="${child != null}">
+    <section th:if="${child != null}" class="child-summary">
         <h2 th:text="#{home.child.section}">Your child</h2>
         <p>
             <strong th:text="#{home.child.name}">Name</strong>:
@@ -24,8 +24,48 @@
     </section>
 
     <section>
-        <h2 th:text="#{home.suggestions.title}">Today's suggested games</h2>
-        <p th:text="#{home.suggestions.placeholder}">Coming soon</p>
+        <h2 th:text="#{home.suggestions.title}">Today's five</h2>
+        <p class="subtitle" th:text="#{home.suggestions.subtitle}">One game from each development zone</p>
+
+        <p class="notice" th:if="${child == null}" th:text="#{home.suggestions.noChild}">Add your child first.</p>
+        <p class="notice" th:if="${child != null and #lists.isEmpty(todaysGames)}" th:text="#{home.suggestions.empty}">Nothing left for today.</p>
+
+        <div class="game-cards" th:if="${!#lists.isEmpty(todaysGames)}">
+            <div class="game-card" th:each="game, iter : ${todaysGames}"
+                 th:classappend="${'accent-' + (iter.index % 5)}">
+                <input type="checkbox" class="flip-toggle" th:id="${'flip-' + game.id}"/>
+                <div class="card-inner">
+                    <div class="card-face card-front">
+                        <label class="flip-label" th:for="${'flip-' + game.id}">
+                            <span class="zone-badge" th:text="${game.zoneName}">Zone</span>
+                            <p class="game-title" th:text="${game.title}">Game title</p>
+                            <span class="tap-hint" th:text="#{home.suggestions.tapForInstructions}">Tap for instructions</span>
+                        </label>
+                        <form th:action="@{'/home/games/' + ${game.id} + '/complete'}" method="post">
+                            <button type="submit" class="done-button" th:text="#{home.suggestions.done}">Done</button>
+                        </form>
+                    </div>
+                    <div class="card-face card-back">
+                        <p class="game-instructions" th:text="${game.instructions}">Instructions</p>
+                        <label class="back-hint" th:for="${'flip-' + game.id}" th:text="#{home.suggestions.back}">Back</label>
+                        <form th:action="@{'/home/games/' + ${game.id} + '/complete'}" method="post">
+                            <button type="submit" class="done-button" th:text="#{home.suggestions.done}">Done</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 th:text="#{home.zones.title}">All development zones</h2>
+        <div class="zone-cards">
+            <div class="zone-card" th:each="zone, iter : ${zones}"
+                 th:classappend="${'accent-' + (iter.index % 5)}">
+                <p class="zone-name" th:text="${zone.name}">Zone name</p>
+                <p class="zone-count" th:text="#{home.zones.count(${zone.gameCount})}">N games</p>
+            </div>
+        </div>
     </section>
 </main>
 </body>

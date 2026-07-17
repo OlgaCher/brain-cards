@@ -34,5 +34,6 @@ public class GameTranslation {
     @Column(nullable = false)
     private String title;
 
+    @Column(columnDefinition = "text")
     private String instructions;
 }

@@ -33,7 +33,7 @@ public class Parent {
     private String displayName;
 
     @Column(nullable = false)
-    private String locale = "uk";
+    private String locale = "UA";
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

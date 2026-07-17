@@ -1,7 +1,7 @@
 body {
     font-family: system-ui, sans-serif;
     color: #222;
-    max-width: 640px;
+    max-width: 960px;
     margin: 0 auto;
     padding: 0 1.5rem 3rem;
 }
@@ -70,4 +70,150 @@ button:hover {
 .notice.error {
     background: #fbe9e9;
     color: #a33;
+}
+
+.subtitle {
+    color: #666;
+    margin-top: -0.5rem;
+}
+
+.game-cards, .zone-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.accent-0 { --accent-color: #e0634f; }
+.accent-1 { --accent-color: #3b82c4; }
+.accent-2 { --accent-color: #3fa66a; }
+.accent-3 { --accent-color: #7a5fd0; }
+.accent-4 { --accent-color: #d99a2b; }
+
+.zone-card {
+    background: #fff;
+    border: 1px solid #e2e2e2;
+    border-top: 4px solid var(--accent-color, #2a6f6f);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.zone-name {
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+}
+
+.zone-count {
+    color: #666;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Game cards flip on click (pure CSS - a hidden checkbox drives the 3D rotation) to reveal
+   instructions on the back, since a title alone often isn't enough to know how to play. */
+.game-card {
+    position: relative;
+    min-height: 230px;
+    perspective: 1000px;
+}
+
+.flip-toggle {
+    display: none;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 230px;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+}
+
+.flip-toggle:checked ~ .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #e2e2e2;
+    border-top: 4px solid var(--accent-color, #2a6f6f);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+}
+
+/* Wraps just the zone badge/title/hint - not the whole front face, so the Done button
+   below it (a sibling, outside this label) can be clicked without also triggering the flip. */
+.flip-label {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    cursor: pointer;
+    margin: 0;
+    font-weight: normal;
+}
+
+.zone-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--accent-color, #2a6f6f);
+    margin-bottom: 0.5rem;
+}
+
+.game-title {
+    font-weight: 600;
+    margin: 0;
+}
+
+.tap-hint {
+    margin-top: auto;
+    font-size: 0.8rem;
+    color: #999;
+}
+
+.game-instructions {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    overflow-y: auto;
+    flex: 1;
+    margin: 0 0 0.5rem;
+}
+
+.back-hint {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: normal;
+    color: var(--accent-color, #2a6f6f);
+    text-decoration: underline;
+    cursor: pointer;
+    margin: 0 0 0.5rem;
+}
+
+.card-front form {
+    margin-top: 0.5rem;
+}
+
+.done-button {
+    width: 100%;
+    background: #f1f1f1;
+    color: #333;
+}
+
+.done-button:hover {
+    background: var(--accent-color, #2a6f6f);
+    color: #fff;
 }
