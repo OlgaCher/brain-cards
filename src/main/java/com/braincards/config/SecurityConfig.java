@@ -18,7 +18,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 public class SecurityConfig {
 
     private static final String[] API_PATHS = {
-            "/parent/**", "/child/**", "/zone/**", "/game/**", "/session-log/**", "/suggestion/**"
+            "/parent/**", "/child/**", "/zone/**", "/game/**", "/session-log/**", "/suggestion/**", "/coach/**"
     };
 
     @Bean
@@ -26,15 +26,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // REST API: HTTP Basic auth only, no CSRF, no session. Stateless is what makes disabling CSRF
-    // safe here - without it, a request carrying only an ambient session cookie (e.g. from being
-    // logged into the browser pages in the same tab) would still be accepted, which is exactly the
-    // cookie-based ambient-credential situation CSRF protection exists for. Forcing
-    // SessionCreationPolicy.STATELESS means these endpoints never read or create a session, so only
-    // an explicit Basic Auth header (sent on every request, not attached automatically by the
-    // browser) authenticates. An unauthenticated request gets a real 401 (BasicAuthenticationEntryPoint),
-    // not a redirect to the login page - and it's what makes these endpoints directly testable from
-    // Postman/Swagger/curl.
     @Bean
     @Order(1)
     public SecurityFilterChain apiSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -47,8 +38,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // Browser pages: session-based form login, CSRF enabled (cookie-backed so Swagger/curl can
-    // still read it if ever needed for these routes).
     @Bean
     @Order(2)
     public SecurityFilterChain webSecurityFilterChain(HttpSecurity http) throws Exception {

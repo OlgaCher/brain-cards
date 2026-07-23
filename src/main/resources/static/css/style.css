@@ -203,17 +203,36 @@ button:hover {
     margin: 0 0 0.5rem;
 }
 
-.card-front form {
+.card-actions {
+    display: flex;
+    gap: 0.5rem;
     margin-top: 0.5rem;
 }
 
-.done-button {
+.card-actions form {
+    flex: 1;
+}
+
+.card-actions button {
     width: 100%;
-    background: #f1f1f1;
-    color: #333;
+    padding: 0.5rem 0.5rem;
+}
+
+.swap-button {
+    background: #fff;
+    color: var(--accent-color, #2a6f6f);
+    border: 1px solid var(--accent-color, #2a6f6f);
+}
+
+.swap-button:hover {
+    background: #f4f4f8;
+}
+
+.done-button {
+    background: var(--accent-color, #2a6f6f);
+    color: #fff;
 }
 
 .done-button:hover {
-    background: var(--accent-color, #2a6f6f);
-    color: #fff;
+    filter: brightness(0.92);
 }

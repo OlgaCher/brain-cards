@@ -63,14 +63,20 @@ public class HomeController {
         return "home";
     }
 
-    // Simple "mark as done" for the happy path - always logs JUST_RIGHT with no duration/note.
-    // A fuller outcome-picker (EASY / JUST_RIGHT / TOO_HARD / REFUSED, duration, notes) is a
-    // planned follow-up; for now this is enough to remove the game from today's suggestions
-    // (the cooldown query excludes anything with a session log dated today).
     @PostMapping("/home/games/{gameId}/complete")
     public String markComplete(@AuthenticationPrincipal ParentUserDetails principal, @PathVariable Long gameId) {
         sessionLogService.create(principal.getParentId(),
                 new SessionLogRequest(gameId, LocalDate.now(), Outcome.JUST_RIGHT, null, null));
+        return "redirect:/home";
+    }
+
+    @PostMapping("/home/games/{gameId}/swap")
+    public String swap(@AuthenticationPrincipal ParentUserDetails principal, @PathVariable Long gameId) {
+        Parent parent = parentRepository.findById(principal.getParentId()).orElseThrow();
+        Child child = parent.getChild();
+        if (child != null) {
+            dailySuggestionService.recordSwap(child, gameId);
+        }
         return "redirect:/home";
     }
 }
