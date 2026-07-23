@@ -1,5 +1,6 @@
 package com.braincards.controller;
 
+import com.braincards.ai.AiCoachException;
 import com.braincards.dto.ErrorResponse;
 import com.braincards.service.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,12 @@ public class ApiExceptionHandler {
     public ResponseEntity<ErrorResponse> handleBadRequest(IllegalArgumentException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(AiCoachException.class)
+    public ResponseEntity<ErrorResponse> handleAiCoach(AiCoachException ex) {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(new ErrorResponse(HttpStatus.SERVICE_UNAVAILABLE.value(), ex.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

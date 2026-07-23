@@ -41,16 +41,26 @@
                             <p class="game-title" th:text="${game.title}">Game title</p>
                             <span class="tap-hint" th:text="#{home.suggestions.tapForInstructions}">Tap for instructions</span>
                         </label>
-                        <form th:action="@{'/home/games/' + ${game.id} + '/complete'}" method="post">
-                            <button type="submit" class="done-button" th:text="#{home.suggestions.done}">Done</button>
-                        </form>
+                        <div class="card-actions">
+                            <form th:action="@{'/home/games/' + ${game.id} + '/swap'}" method="post">
+                                <button type="submit" class="swap-button" th:text="#{home.suggestions.swap}">Swap</button>
+                            </form>
+                            <form th:action="@{'/home/games/' + ${game.id} + '/complete'}" method="post">
+                                <button type="submit" class="done-button" th:text="#{home.suggestions.done}">Done</button>
+                            </form>
+                        </div>
                     </div>
                     <div class="card-face card-back">
                         <p class="game-instructions" th:text="${game.instructions}">Instructions</p>
                         <label class="back-hint" th:for="${'flip-' + game.id}" th:text="#{home.suggestions.back}">Back</label>
-                        <form th:action="@{'/home/games/' + ${game.id} + '/complete'}" method="post">
-                            <button type="submit" class="done-button" th:text="#{home.suggestions.done}">Done</button>
-                        </form>
+                        <div class="card-actions">
+                            <form th:action="@{'/home/games/' + ${game.id} + '/swap'}" method="post">
+                                <button type="submit" class="swap-button" th:text="#{home.suggestions.swap}">Swap</button>
+                            </form>
+                            <form th:action="@{'/home/games/' + ${game.id} + '/complete'}" method="post">
+                                <button type="submit" class="done-button" th:text="#{home.suggestions.done}">Done</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
