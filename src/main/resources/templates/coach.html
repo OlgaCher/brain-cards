@@ -8,7 +8,7 @@
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
 
-<main th:classappend="${'accent-' + accentIndex}">
+<main th:classappend="${'accent-' + (game.zoneId % 5)}">
     <p><a th:href="@{/home}" class="back-link" th:text="#{zone.back}">← Back to home</a></p>
 
     <section class="hero zone-hero">

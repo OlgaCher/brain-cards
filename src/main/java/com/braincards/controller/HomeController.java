@@ -100,7 +100,6 @@ public class HomeController {
         model.addAttribute("zoneName", zone.name());
         model.addAttribute("zoneId", zoneId);
         model.addAttribute("games", games);
-        model.addAttribute("accentIndex", accentIndexOf(zoneId));
         model.addAttribute("currentPickId", currentPickId);
         model.addAttribute("playedTodayIds", playedTodayIds);
         model.addAttribute("zoneDoneToday", zoneDoneToday);
@@ -135,9 +134,7 @@ public class HomeController {
 
     @GetMapping("/home/games/{gameId}/coach")
     public String coachPage(@PathVariable Long gameId, Model model) {
-        GameDto game = gameService.getGame(gameId); // 404 if the game doesn't exist
-        model.addAttribute("game", game);
-        model.addAttribute("accentIndex", accentIndexOf(game.zoneId()));
+        model.addAttribute("game", gameService.getGame(gameId)); // 404 if the game doesn't exist
         return "coach";
     }
 
@@ -160,7 +157,4 @@ public class HomeController {
         return "redirect:/home/games/" + gameId + "/coach";
     }
 
-    private int accentIndexOf(Long zoneId) {
-        return (int) (zoneId % 5);
-    }
 }
