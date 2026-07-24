@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="#{coach.title}">Ask the coach</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<main th:classappend="${'accent-' + accentIndex}">
+    <p><a th:href="@{/home}" class="back-link" th:text="#{zone.back}">← Back to home</a></p>
+
+    <section class="hero zone-hero">
+        <span class="zone-badge" th:text="${game.zoneName}">Zone</span>
+        <h1 class="greeting" th:text="${game.title}">Game title</h1>
+        <p class="subtitle" th:text="#{coach.intro}">Stuck? Ask for a practical tip.</p>
+    </section>
+
+    <section class="section">
+        <div class="coach-panel">
+            <h2 class="panel-title" th:text="#{coach.instructionsTitle}">How to play</h2>
+            <p class="game-list-instructions" th:text="${game.instructions}">Instructions</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <form th:action="@{'/home/games/' + ${game.id} + '/coach'}" method="post" class="coach-form">
+            <label for="question" th:text="#{coach.questionLabel}">Your question</label>
+            <textarea id="question" name="question" rows="3" required="required"
+                      th:text="${question}"
+                      th:placeholder="#{coach.placeholder}"></textarea>
+            <button type="submit" class="choose-button" th:text="#{coach.submit}">Ask the coach</button>
+        </form>
+
+        <p class="notice error" th:if="${coachError}" th:text="${coachError}">Something went wrong.</p>
+
+        <div class="coach-answer" th:if="${answer}">
+            <h2 class="panel-title" th:text="#{coach.answerTitle}">Coach says</h2>
+            <p class="coach-answer-text" th:text="${answer}">Answer</p>
+        </div>
+    </section>
+</main>
+</body>
+</html>

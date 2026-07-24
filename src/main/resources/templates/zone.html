@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${zoneName}">Zone</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<main th:classappend="${'accent-' + accentIndex}">
+    <p><a th:href="@{/home}" class="back-link" th:text="#{zone.back}">← Back</a></p>
+
+    <section class="hero zone-hero">
+        <span class="zone-badge" th:text="#{zone.eyebrow}">Development zone</span>
+        <h1 class="greeting" th:text="${zoneName}">Zone name</h1>
+        <p class="subtitle" th:text="#{zone.subtitle}">Review the games and choose one for today.</p>
+    </section>
+
+    <p class="notice" th:if="${#lists.isEmpty(games)}" th:text="#{zone.empty}">No games in this zone yet.</p>
+    <p class="notice" th:if="${zoneDoneToday}" th:text="#{zone.doneNotice}">Already played today.</p>
+
+    <div class="game-list">
+        <article class="game-list-card" th:each="game : ${games}"
+                 th:classappend="${playedTodayIds.contains(game.id) ? 'is-played' : (game.id == currentPickId ? 'is-current' : '')}">
+            <div class="game-list-head">
+                <h2 class="game-title" th:text="${game.title}">Game title</h2>
+            </div>
+            <p class="game-list-instructions" th:text="${game.instructions}">Instructions</p>
+
+            <p class="played-label" th:if="${playedTodayIds.contains(game.id)}"
+               th:text="#{zone.playedToday}">✓ Played today</p>
+
+            <form th:if="${hasChild and !playedTodayIds.contains(game.id)}"
+                  th:action="@{'/home/games/' + ${game.id} + '/choose'}" method="post">
+                <button type="submit" th:disabled="${zoneDoneToday}"
+                        th:class="${game.id == currentPickId} ? 'swap-button' : 'choose-button'"
+                        th:text="${game.id == currentPickId} ? #{zone.chosen} : #{zone.choose}">Choose for today</button>
+            </form>
+        </article>
+    </div>
+</main>
+</body>
+</html>

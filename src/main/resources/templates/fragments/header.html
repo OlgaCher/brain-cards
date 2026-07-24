@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
-<header th:fragment="header">
-    <nav>
-        <span th:text="#{app.name}">BrainCards</span>
-        <span>
-            <a href="?lang=UA" th:text="#{nav.language.ua}">UK</a> |
+<header th:fragment="header" class="site-header">
+    <a th:href="@{/home}" class="brand">
+        <span class="brand-mark">◐</span>
+        <span class="brand-text">
+            <span class="brand-name" th:text="#{app.name}">BrainCards</span>
+            <span class="brand-tagline" th:text="#{app.tagline}">Smart play with your child</span>
+        </span>
+    </a>
+    <div class="header-actions">
+        <div class="lang-switch">
+            <a href="?lang=UA" th:text="#{nav.language.ua}">UA</a>
             <a href="?lang=en" th:text="#{nav.language.en}">EN</a>
-        </span>
-        <span sec:authorize="isAuthenticated()">
-            <form th:action="@{/logout}" method="post" style="display:inline">
-                <button type="submit" th:text="#{nav.logout}">Logout</button>
-            </form>
-        </span>
-    </nav>
+        </div>
+        <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="btn-ghost" th:text="#{nav.logout}">Logout</button>
+        </form>
+    </div>
 </header>
 </body>
 </html>
