@@ -1,70 +1,214 @@
+/* ============================================================
+   BrainCards design system
+   One brand colour (purple) + the five card-zone accents, on a
+   soft lavender canvas with white rounded panels.
+   ============================================================ */
+:root {
+    --brand: #6b57d2;
+    --brand-dark: #5a46bd;
+    --bg: #f4f4fb;
+    --panel: #ffffff;
+    --text: #1f2333;
+    --muted: #6b7280;
+    --border: #e7e7f2;
+    --radius: 14px;
+    --radius-sm: 10px;
+    --shadow: 0 2px 10px rgba(30, 30, 60, 0.06);
+    --shadow-hover: 0 6px 20px rgba(30, 30, 60, 0.12);
+}
+
+/* Zone accent colours (shared by game + zone cards) */
+.accent-0 { --accent-color: #e0634f; }
+.accent-1 { --accent-color: #3b82c4; }
+.accent-2 { --accent-color: #3fa66a; }
+.accent-3 { --accent-color: #7a5fd0; }
+.accent-4 { --accent-color: #d99a2b; }
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: system-ui, sans-serif;
-    color: #222;
-    max-width: 960px;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    max-width: 1000px;
     margin: 0 auto;
     padding: 0 1.5rem 3rem;
+    line-height: 1.5;
 }
 
-header nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0;
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 1.5rem;
+h1, h2 {
+    line-height: 1.25;
 }
 
-header nav a {
-    color: #2a6f6f;
+a {
+    color: var(--brand);
     text-decoration: none;
 }
 
-header nav a:hover {
+a:hover {
     text-decoration: underline;
 }
 
+/* ---------- Header ---------- */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: inherit;
+}
+
+.brand:hover {
+    text-decoration: none;
+}
+
+.brand-mark {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--brand), #9b8cf0);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-name {
+    font-weight: 700;
+    font-size: 1.15rem;
+}
+
+.brand-tagline {
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.lang-switch {
+    display: inline-flex;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+    background: var(--panel);
+}
+
+.lang-switch a {
+    padding: 0.35rem 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.lang-switch a:hover {
+    background: #f0eefb;
+    text-decoration: none;
+    color: var(--brand);
+}
+
+.logout-form {
+    margin: 0;
+}
+
+/* ---------- Buttons ---------- */
+button {
+    font: inherit;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    background: var(--brand);
+    color: #fff;
+    font-weight: 600;
+    transition: background 0.15s, filter 0.15s, box-shadow 0.15s;
+}
+
+button:hover {
+    background: var(--brand-dark);
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    padding: 0.4rem 0.8rem;
+}
+
+.btn-ghost:hover {
+    background: #f0eefb;
+    color: var(--brand);
+}
+
+/* ---------- Forms ---------- */
 fieldset {
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    margin-bottom: 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    margin: 0 0 1.25rem;
+    padding: 1rem 1.25rem 1.25rem;
+}
+
+legend {
+    font-weight: 700;
+    padding: 0 0.4rem;
+    color: var(--brand);
 }
 
 .field {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.9rem;
 }
 
 label {
     display: block;
     font-weight: 600;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
 }
 
 input {
     width: 100%;
-    box-sizing: border-box;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 0.6rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: #fbfbfe;
 }
 
-button {
-    background: #2a6f6f;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 0.6rem 1.2rem;
-    cursor: pointer;
+input:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(107, 87, 210, 0.15);
 }
 
-button:hover {
-    background: #1f5555;
-}
-
+/* ---------- Notices ---------- */
 .notice {
-    padding: 0.5rem 0.75rem;
-    border-radius: 4px;
-    background: #eef6f6;
+    padding: 0.6rem 0.85rem;
+    border-radius: var(--radius-sm);
+    background: #eef0fb;
+    color: #3a3a5a;
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
 }
 
 .notice.error {
@@ -72,49 +216,158 @@ button:hover {
     color: #a33;
 }
 
-.subtitle {
-    color: #666;
-    margin-top: -0.5rem;
+/* ---------- Auth pages (login / register) ---------- */
+.auth-wrap {
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
 }
 
+.auth-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent-color, var(--brand));
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    width: 100%;
+    max-width: 460px;
+}
+
+.auth-card h1 {
+    margin: 0 0 1.25rem;
+}
+
+.auth-alt {
+    margin-top: 1.25rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+/* ---------- Home hero ---------- */
+.hero {
+    background: linear-gradient(135deg, #ffffff, #f6f4ff);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.75rem;
+    margin-bottom: 2rem;
+}
+
+.greeting {
+    margin: 0 0 0.75rem;
+    font-size: 1.6rem;
+}
+
+.child-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.chip {
+    background: #f0eefb;
+    color: var(--brand-dark);
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.85rem;
+}
+
+.chip strong {
+    font-weight: 700;
+}
+
+/* ---------- Sections ---------- */
+.section {
+    margin-bottom: 2.25rem;
+}
+
+.section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.section-head h2 {
+    margin: 0;
+}
+
+.subtitle {
+    color: var(--muted);
+    margin: 0.25rem 0 0;
+    font-size: 0.9rem;
+}
+
+.pill {
+    background: #f0eefb;
+    color: var(--brand-dark);
+    border-radius: 999px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.count-badge {
+    display: inline-block;
+    background: var(--brand);
+    color: #fff;
+    border-radius: 999px;
+    padding: 0.1rem 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-left: 0.4rem;
+}
+
+/* ---------- Card grids ---------- */
 .game-cards, .zone-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
     gap: 1rem;
     margin-top: 1rem;
 }
 
-.accent-0 { --accent-color: #e0634f; }
-.accent-1 { --accent-color: #3b82c4; }
-.accent-2 { --accent-color: #3fa66a; }
-.accent-3 { --accent-color: #7a5fd0; }
-.accent-4 { --accent-color: #d99a2b; }
-
+/* ---------- Zone cards ---------- */
 .zone-card {
-    background: #fff;
-    border: 1px solid #e2e2e2;
-    border-top: 4px solid var(--accent-color, #2a6f6f);
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    display: block;
+    color: inherit;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent-color, var(--brand));
+    border-radius: var(--radius);
+    padding: 1.1rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+a.zone-card:hover {
+    text-decoration: none;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
 }
 
 .zone-name {
     font-weight: 700;
-    margin: 0 0 0.25rem;
+    margin: 0 0 0.5rem;
 }
 
 .zone-count {
-    color: #666;
+    display: inline-block;
+    background: #f0eefb;
+    color: var(--brand-dark);
+    border-radius: 999px;
+    padding: 0.2rem 0.7rem;
     margin: 0;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 600;
 }
 
-/* Game cards flip on click (pure CSS - a hidden checkbox drives the 3D rotation) to reveal
-   instructions on the back, since a title alone often isn't enough to know how to play. */
+/* ---------- Game cards (flip on click) ---------- */
 .game-card {
     position: relative;
-    min-height: 230px;
+    min-height: 250px;
     perspective: 1000px;
 }
 
@@ -125,7 +378,7 @@ button:hover {
 .card-inner {
     position: relative;
     width: 100%;
-    height: 230px;
+    height: 250px;
     transition: transform 0.5s;
     transform-style: preserve-3d;
 }
@@ -138,13 +391,12 @@ button:hover {
     position: absolute;
     inset: 0;
     backface-visibility: hidden;
-    box-sizing: border-box;
-    background: #fff;
-    border: 1px solid #e2e2e2;
-    border-top: 4px solid var(--accent-color, #2a6f6f);
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent-color, var(--brand));
+    border-radius: var(--radius);
+    padding: 1.1rem;
+    box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
 }
@@ -153,8 +405,8 @@ button:hover {
     transform: rotateY(180deg);
 }
 
-/* Wraps just the zone badge/title/hint - not the whole front face, so the Done button
-   below it (a sibling, outside this label) can be clicked without also triggering the flip. */
+/* Wraps just the badge/title/hint (not the whole face) so the buttons below - siblings outside
+   this label - can be clicked without also triggering the flip. */
 .flip-label {
     display: flex;
     flex-direction: column;
@@ -166,28 +418,29 @@ button:hover {
 
 .zone-badge {
     display: inline-block;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.03em;
-    color: var(--accent-color, #2a6f6f);
+    letter-spacing: 0.04em;
+    color: var(--accent-color, var(--brand));
     margin-bottom: 0.5rem;
 }
 
 .game-title {
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 1.05rem;
     margin: 0;
 }
 
 .tap-hint {
     margin-top: auto;
-    font-size: 0.8rem;
-    color: #999;
+    font-size: 0.78rem;
+    color: var(--muted);
 }
 
 .game-instructions {
     font-size: 0.85rem;
-    line-height: 1.4;
+    line-height: 1.45;
     overflow-y: auto;
     flex: 1;
     margin: 0 0 0.5rem;
@@ -196,9 +449,8 @@ button:hover {
 .back-hint {
     display: inline-block;
     font-size: 0.8rem;
-    font-weight: normal;
-    color: var(--accent-color, #2a6f6f);
-    text-decoration: underline;
+    font-weight: 600;
+    color: var(--accent-color, var(--brand));
     cursor: pointer;
     margin: 0 0 0.5rem;
 }
@@ -211,28 +463,206 @@ button:hover {
 
 .card-actions form {
     flex: 1;
+    margin: 0;
 }
 
 .card-actions button {
     width: 100%;
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem;
+    font-size: 0.9rem;
 }
 
 .swap-button {
     background: #fff;
-    color: var(--accent-color, #2a6f6f);
-    border: 1px solid var(--accent-color, #2a6f6f);
+    color: var(--accent-color, var(--brand));
+    border: 1px solid var(--accent-color, var(--brand));
 }
 
 .swap-button:hover {
-    background: #f4f4f8;
+    background: #faf9ff;
 }
 
 .done-button {
-    background: var(--accent-color, #2a6f6f);
+    background: var(--accent-color, var(--brand));
     color: #fff;
 }
 
 .done-button:hover {
-    filter: brightness(0.92);
+    filter: brightness(0.93);
+    background: var(--accent-color, var(--brand));
+}
+
+/* ---------- Zone detail page ---------- */
+.back-link {
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.back-link:hover {
+    color: var(--brand);
+    text-decoration: none;
+}
+
+.zone-hero {
+    border-top: 4px solid var(--accent-color, var(--brand));
+}
+
+.game-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.game-list-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent-color, var(--brand));
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.game-list-card.is-current {
+    background: #faf9ff;
+    box-shadow: 0 0 0 2px var(--accent-color, var(--brand));
+}
+
+.game-list-card.is-played {
+    opacity: 0.72;
+    background: #f7f7fa;
+}
+
+.played-label {
+    margin: 0;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--accent-color, var(--brand));
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button:disabled:hover {
+    filter: none;
+}
+
+.game-list-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+}
+
+.game-list-head .game-title {
+    font-size: 1.05rem;
+}
+
+.game-list-instructions {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: #3a3f52;
+    margin: 0 0 1rem;
+    flex: 1;
+}
+
+.game-list-card form {
+    margin: 0;
+}
+
+.game-list-card button {
+    width: 100%;
+}
+
+.choose-button {
+    background: var(--accent-color, var(--brand));
+    color: #fff;
+}
+
+.choose-button:hover {
+    background: var(--accent-color, var(--brand));
+    filter: brightness(0.93);
+}
+
+/* ---------- AI coach ---------- */
+.card-back-links {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.card-back-links .back-hint {
+    margin: 0;
+}
+
+.coach-link {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--brand);
+    white-space: nowrap;
+}
+
+.coach-panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+}
+
+.panel-title {
+    font-size: 1rem;
+    margin: 0 0 0.5rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.coach-form {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.coach-form textarea {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: #fbfbfe;
+    font: inherit;
+    resize: vertical;
+    margin-bottom: 0.75rem;
+}
+
+.coach-form textarea:focus {
+    outline: none;
+    border-color: var(--accent-color, var(--brand));
+    box-shadow: 0 0 0 3px rgba(107, 87, 210, 0.15);
+}
+
+.coach-answer {
+    background: linear-gradient(135deg, #ffffff, #f6f4ff);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent-color, var(--brand));
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+}
+
+.coach-answer-text {
+    margin: 0;
+    line-height: 1.6;
+    white-space: pre-wrap;
 }

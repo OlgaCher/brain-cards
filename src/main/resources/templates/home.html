@@ -9,30 +9,39 @@
 <div th:replace="~{fragments/header :: header}"></div>
 
 <main>
-    <h1 th:text="#{home.greeting(${parent.displayName != null and !parent.displayName.isEmpty() ? parent.displayName : parent.email})}">Welcome</h1>
-
-    <section th:if="${child != null}" class="child-summary">
-        <h2 th:text="#{home.child.section}">Your child</h2>
-        <p>
-            <strong th:text="#{home.child.name}">Name</strong>:
-            <span th:text="${child.name}">Name</span>
-        </p>
-        <p th:if="${child.birthDate != null}">
-            <strong th:text="#{home.child.birthDate}">Birth date</strong>:
-            <span th:text="${child.birthDate}">Birth date</span>
-        </p>
+    <section class="hero">
+        <h1 class="greeting"
+            th:text="#{home.greeting(${parent.displayName != null and !parent.displayName.isEmpty() ? parent.displayName : parent.email})}">
+            Welcome</h1>
+        <div class="child-info" th:if="${child != null}">
+            <span class="chip">
+                <strong th:text="#{home.child.name}">Name</strong>:
+                <span th:text="${child.name}">Name</span>
+            </span>
+            <span class="chip" th:if="${child.birthDate != null}">
+                <strong th:text="#{home.child.birthDate}">Birth date</strong>:
+                <span th:text="${child.birthDate}">Birth date</span>
+            </span>
+        </div>
     </section>
 
-    <section>
-        <h2 th:text="#{home.suggestions.title}">Today's five</h2>
-        <p class="subtitle" th:text="#{home.suggestions.subtitle}">One game from each development zone</p>
+    <section class="section">
+        <div class="section-head">
+            <div>
+                <h2 th:text="#{home.suggestions.title}">Today's five</h2>
+                <p class="subtitle" th:text="#{home.suggestions.subtitle}">One game from each development zone</p>
+            </div>
+            <span class="pill" th:text="#{home.suggestions.time}">≈ 15–20 min</span>
+        </div>
 
         <p class="notice" th:if="${child == null}" th:text="#{home.suggestions.noChild}">Add your child first.</p>
-        <p class="notice" th:if="${child != null and #lists.isEmpty(todaysGames)}" th:text="#{home.suggestions.empty}">Nothing left for today.</p>
+        <p class="notice" th:if="${noGamesForAge}" th:text="#{home.suggestions.noGamesForAge}">No games for this age.</p>
+        <p class="notice" th:if="${child != null and #lists.isEmpty(todaysGames) and !noGamesForAge}"
+           th:text="#{home.suggestions.empty}">Nothing left for today.</p>
 
         <div class="game-cards" th:if="${!#lists.isEmpty(todaysGames)}">
-            <div class="game-card" th:each="game, iter : ${todaysGames}"
-                 th:classappend="${'accent-' + (iter.index % 5)}">
+            <div class="game-card" th:each="game : ${todaysGames}"
+                 th:classappend="${'accent-' + (game.zoneId % 5)}">
                 <input type="checkbox" class="flip-toggle" th:id="${'flip-' + game.id}"/>
                 <div class="card-inner">
                     <div class="card-face card-front">
@@ -52,7 +61,11 @@
                     </div>
                     <div class="card-face card-back">
                         <p class="game-instructions" th:text="${game.instructions}">Instructions</p>
-                        <label class="back-hint" th:for="${'flip-' + game.id}" th:text="#{home.suggestions.back}">Back</label>
+                        <div class="card-back-links">
+                            <label class="back-hint" th:for="${'flip-' + game.id}" th:text="#{home.suggestions.back}">Back</label>
+                            <a class="coach-link" th:href="@{'/home/games/' + ${game.id} + '/coach'}"
+                               th:text="#{coach.ask}">Ask the coach</a>
+                        </div>
                         <div class="card-actions">
                             <form th:action="@{'/home/games/' + ${game.id} + '/swap'}" method="post">
                                 <button type="submit" class="swap-button" th:text="#{home.suggestions.swap}">Swap</button>
@@ -67,14 +80,20 @@
         </div>
     </section>
 
-    <section>
-        <h2 th:text="#{home.zones.title}">All development zones</h2>
+    <section class="section">
+        <div class="section-head">
+            <h2>
+                <span th:text="#{home.zones.title}">All development zones</span>
+                <span class="count-badge" th:text="${#lists.size(zones)}">10</span>
+            </h2>
+        </div>
         <div class="zone-cards">
-            <div class="zone-card" th:each="zone, iter : ${zones}"
-                 th:classappend="${'accent-' + (iter.index % 5)}">
+            <a class="zone-card" th:each="zone : ${zones}"
+               th:href="@{'/home/zones/' + ${zone.id}}"
+               th:classappend="${'accent-' + (zone.id % 5)}">
                 <p class="zone-name" th:text="${zone.name}">Zone name</p>
                 <p class="zone-count" th:text="#{home.zones.count(${zone.gameCount})}">N games</p>
-            </div>
+            </a>
         </div>
     </section>
 </main>

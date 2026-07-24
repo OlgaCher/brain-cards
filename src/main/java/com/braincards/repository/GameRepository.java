@@ -13,6 +13,14 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 
     long countByZoneIdAndActiveTrue(Long zoneId);
 
+    @Query("""
+            SELECT COUNT(g) FROM Game g
+            WHERE g.active = true
+              AND g.minAgeMonths <= :ageMonths
+              AND g.maxAgeMonths >= :ageMonths
+            """)
+    long countGamesForAge(@Param("ageMonths") int ageMonths);
+
     @Query(value = """
             SELECT g.* FROM game g
             WHERE g.active = true
